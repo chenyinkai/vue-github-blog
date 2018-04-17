@@ -1,30 +1,18 @@
 # vue-github-blog
 
-> blog with vue and github api
+> 基于 `vue` 和 `Github Api` 搭建的博客
 
-## Build Setup
+> [线上地址](http://47.98.208.58/)
+
+## 测试
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:8081
 npm run dev
 
 # build for production with minification
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
