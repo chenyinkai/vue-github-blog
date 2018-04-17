@@ -12,7 +12,7 @@ function getPostUrl (id) {
 }
 
 const Cache = {
-  get: (key) => {
+  get: key => {
     if (!window.sessionStorage) return false
     return JSON.parse(window.sessionStorage.getItem(key))
   },
@@ -21,21 +21,24 @@ const Cache = {
     window.sessionStorage.setItem(key, JSON.stringify(data))
     return true
   },
-  has: (key) => {
-    return Boolean(window.sessionStorage && window.sessionStorage.hasOwnProperty(key))
+  has: key => {
+    return Boolean(
+      window.sessionStorage && window.sessionStorage.hasOwnProperty(key)
+    )
   }
 }
 
 export default {
-
   getList () {
     if (Cache.has('list')) {
       return Promise.resolve(Cache.get('list'))
     } else {
-      return axios.get(getListUrl())
+      return axios
+        .get(getListUrl())
         .then(res => res.data)
         .then(arr => {
-          const list = arr.map(({title, created_at, number}) => ({
+          // eslint-disable-next-line
+          const list = arr.map(({ title, created_at, number }) => ({
             title: title,
             date: created_at,
             id: number
@@ -52,7 +55,8 @@ export default {
     if (Cache.has(cacheKey)) {
       return Promise.resolve(Cache.get(cacheKey))
     } else {
-      return axios.get(getPostUrl(id))
+      return axios
+        .get(getPostUrl(id))
         .then(res => res.data)
         .then(content => {
           Cache.set(cacheKey, content)

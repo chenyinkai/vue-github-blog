@@ -15,70 +15,74 @@
 </template>
 
 <script>
-  import api from '../api'
-  import NProgress from 'nprogress'
+import api from '../api'
+import NProgress from 'nprogress'
 
-  export default {
-    name: 'listView',
-    data () {
-      return {
-        lists: [],
-        loading: true
+export default {
+  name: 'listView',
+  data() {
+    return {
+      lists: [],
+      loading: true
+    }
+  },
+
+  computed: {
+    filteredList() {
+      let keyword = ''
+      if (this.$route) {
+        keyword = (this.$route.query.q || '').toLowerCase()
       }
-    },
+      return this.lists
+        .filter(item => item.title.toLowerCase().indexOf(keyword) !== -1)
+        .sort((itemA, itemB) => new Date(itemB.date) - new Date(itemA.date))
+    }
+  },
 
-    computed: {
-      filteredList () {
-        let keyword = ''
-        if (this.$route) {
-          keyword = (this.$route.query.q || '').toLowerCase()
-        }
-        return this.lists
-          .filter(item => (item.title.toLowerCase().indexOf(keyword) !== -1))
-          .sort((itemA, itemB) => (new Date(itemB.date) - new Date(itemA.date)))
-      }
-    },
+  created() {
+    this.loading = true
+    window.document.title = '善良的乌贼'
+  },
 
-    created () {
+  methods: {
+    loadList() {
       this.loading = true
-      window.document.title = '善良的乌贼'
-    },
-
-    methods: {
-      loadList () {
-        this.loading = true
-        this.lists = []
-        api.getList()
-          .then(lists => {
-            this.loading = false
-            this.lists = lists
-          })
-          .catch(err => {
-            this.loading = false
-            console.error(err)
-          })
-      }
-    },
-
-    beforeRouteEnter (to, from, next) {
-      NProgress.start()
-      api.getList()
+      this.lists = []
+      api
+        .getList()
         .then(lists => {
-          next(vm => {
-            NProgress.done()
-            vm.lists = lists
-            vm.loading = false
-          })
+          console.log(lists)
+          this.loading = false
+          this.lists = lists
+          console.log(this.lists)
         })
         .catch(err => {
-          console.log(err)
-          next(false)
+          this.loading = false
+          console.error(err)
         })
-    },
-
-    watch: {
-      '$route': 'loadList'
     }
+  },
 
+  beforeRouteEnter(to, from, next) {
+    NProgress.start()
+    api
+      .getList()
+      .then(lists => {
+        console.log(lists)
+        next(vm => {
+          NProgress.done()
+          vm.lists = lists
+          vm.loading = false
+        })
+      })
+      .catch(err => {
+        console.log(err)
+        next(false)
+      })
+  },
+
+  watch: {
+    $route: 'loadList'
   }
+}
 </script>
