@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ListView from '../views/List.vue'
-import PostView from '../views/Post.vue'
+import ListView from '../components/List.vue'
+import PostView from '../components/Post.vue'
 
 Vue.use(VueRouter)
 
