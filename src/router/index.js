@@ -19,6 +19,8 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  base: '/vue-github-blog',
+  mode: 'history',
   routes
 })
 
