@@ -2,7 +2,7 @@
 
 > 基于 `vue` 和 `Github Api` 搭建的博客
 
-> [线上地址](http://47.98.208.58/vue-github-blog/index.html#/)
+> [线上地址](http://www.cykspace.com/vue-github-blog)
 
 ## 测试
 
